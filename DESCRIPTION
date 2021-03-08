@@ -1,16 +1,19 @@
-Package: BuildABiocWorkshop
-Title: Bioconductor Workshop Template and Github Actions
+Package: GeneTonicWorkshop
+Title: GeneTonic workshop
 Version: 0.9.0
 Authors@R: 
-    person(given = "Sean",
-           family = "Davis",
-           role = c("aut", "cre"),
-           email = "seandavi@gmail.com",
-           comment = c(ORCID = "your-orc-id-here"))
-Description: This package serves as a template for using github actions to 
-    prepare a Bioconductor Workshop package for use. In particular,
-    a pkgdown website and docker image are generated based on workflow 
-    settings. 
+    c(
+        person(
+            given = "Federico", family = "Marini", role = c("aut", "cre"), 
+            email = "marinif@uni-mainz.de", comment = c(ORCID = "0000-0003-3252-7758")
+        ),
+		person(
+            given = "Annekathrin", family = "Ludt", role = c("aut"), 
+            email = "anneludt@uni-mainz.de", comment = c(ORCID = "0000-0002-2475-4945")
+        )
+    )
+Description: This workshop covers basic usage of GeneTonic for combining and
+    interpreting the results from RNA-seq experiments.
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -22,7 +25,6 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown
-URL: https://seandavi.github.io/BuildABiocWorkshop/
-BugReports: https://github.com/seandavi/BuildABiocWorkshop/issues/new/choose
+URL: https://federicomarini.github.io/GeneTonicWorkshop/
+BugReports: https://github.com/federicomarini/GeneTonicWorkshop/issues/new/choose
 VignetteBuilder: knitr
-DockerImage: seandavi/buildabiocworkshop:latest
