@@ -30,3 +30,4 @@ Suggests:
 URL: https://federicomarini.github.io/GeneTonicWorkshop/
 BugReports: https://github.com/federicomarini/GeneTonicWorkshop/issues/new/choose
 VignetteBuilder: knitr
+DockerImage: federicomarini/genetonicworkshop:latest
