@@ -1,0 +1,18 @@
+url: https://seandavi.github.io/BuildABiocWorkshop
+
+template:
+  params:
+    bootswatch: flatly
+    #ganalytics: UA-99999999-9
+
+home:
+  title: "BuildABiocWorkshop"
+  type: inverse
+
+
+navbar:
+  right:
+   - icon: fa-github
+     href: https://github.com/seandavi/BuildABiocWorkshop
+     
+
