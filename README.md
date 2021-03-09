@@ -1,53 +1,90 @@
-# BuildABiocWorkshop
+# GeneTonic: enjoying the interpretation of your RNA-seq data analysis <img src="man/figures/GeneTonic.png" align="right" width="240" height="278">
 
-This package is a template for building a Bioconductor workshop. The package
-includes Github actions to:
+Authors:  
+Federico Marini^[marinif@uni-mainz.de],
+Annekathrin Ludt^[anneludt@uni-mainz.de]  
+Institute of Medical Biostatistics, Epidemiology and Informatics (IMBEI), Mainz.
+<br/>
+Last modified: 9 Mar, 2021.
 
-1. Set up bioconductor/bioconductor_docker:devel on Github resources
-2. Install package dependencies for your package (based on the `DESCRIPTION` file)
-3. Run `rcmdcheck::rcmdcheck`
-4. Build a pkgdown website and push it to github pages
-5. Build a docker image with the installed package and dependencies
+## Overview
 
-## Responsibilities
+### Description
 
-This year, package authors will be primarily responsible for:
+This workshop demonstrates the use of the [GeneTonic](https://bioconductor.org/packages/GeneTonic/) package to integrate and explore the results of RNA-seq experiments, in the context of differential expression and functional enrichment analyses.
 
-1. Creating a landing site of their choosing for their workshops (a website). This website should be listed in the `DESCRIPTION` file as the `URL`.
-2. Creating a docker account and image that will contain workshop materials and the installed packages necessary to run those materials. The name of the resulting docker image, including "tag" if desired, should be listed in a non-standard tag, `DockerImage:` in the `DESCRIPTION` file. 
+This will be proposed as a lab session that combines an instructor-led live demo, followed by hands-on experimentation guided by exercises, hints, and solutions that participants may continue to use after the workshop.
 
-Both of those tasks can be accomplished using the Github actions included in this template package. The vignette accompanying this package describes how to accomplish both of these tasks.
+The instructor-led live demo comprises three parts:
 
-## Details
+1. Overview of the RNA-seq differential expression workflow.
+2. Introduction to the GeneTonic package and its functionality.
+3. Hands-on exercises and discussion.
 
-For detailed instructions, see the `How to build a workshop` article/vignette.
+Participants are encouraged to ask questions at any time during the workshop.
 
-## Results of successful deployment
+### Pre-requisites
 
-- A working docker image that contains the installed package and dependencies.
-- An up-to-date `pkgdown` website at https://YOURUSERNAME.github.io/YOURREPOSITORYNAME/
-- Docker image will be tagged with `latest`, `sha-XXXXXX` where `XXXXXX` is the hash of the current `master` commit, and `master`. 
+* Basic knowledge of RNA-seq analysis workflow 
+* Familiarity with concepts proper of differential expression analysis (e.g. in the DESeq2 framework, https://bioconductor.org/packages/DESeq2)
+* Familiarity with functional enrichment analysis concepts (e.g. with the clusterProfiler package, or using the topGO wrapper included in the pcaExplorer package)
 
-## To use the resulting image:
+We recommend to use the latest version of R (>= 4.0.0) and the latest release of Bioconductor version (3.13).
 
-```sh
-docker run -e PASSWORD=<choose_a_password_for_rstudio> -p 8787:8787 YOURDOCKERIMAGENAME
+Install the GeneTonic package
+
 ```
-Once running, navigate to https://localhost:8787/ and then login with `rstudio`:`yourchosenpassword`. 
-
-To try with **this** repository docker image:
-
-```sh
-docker run -e PASSWORD=abc -p 8787:8787 seandavi/buildabiocworkshop2020
+BiocManager::install("GeneTonic")
+# alternatively, the development version directly from GitHub
+BiocManager::install("federicomarini/GeneTonic")
 ```
 
-*NOTE*: Running docker that uses the password in plain text like above exposes the password to others 
-in a multi-user system (like a shared workstation or compute node). In practice, consider using an environment 
-variable instead of plain text to pass along passwords and other secrets in docker command lines. 
+### Participation
+
+Attendees will participate by following along a presentation introducing the GeneTonic package, RMarkdown documents which describe the tasks to perform, trying variations of provided code, and asking questions throughout the workshop.
+
+### _R_ / _Bioconductor_ packages used
+
+* GeneTonic
+* DESeq2
+
+### Time outline
+
+| Activity                     | Time |
+|------------------------------|------|
+| Overview                     | 10m  |
+| Introduction to GeneTonic    | 15m  |
+| Hands-on exercises           | 60m  |
+| Q&As                         | 15m  |
+
+### Workshop goals and objectives
+
+List "big picture" student-centered workshop goals and learning
+objectives. Learning goals and objectives are related, but not the
+same thing. These goals and objectives will help some people to decide
+whether to attend the conference for training purposes, so please make
+these as precise and accurate as possible.
+
+*Learning goals* are high-level descriptions of what
+participants will learn and be able to do after the workshop is
+over. *Learning objectives*, on the other hand, describe in very
+specific and measurable terms specific skills or knowledge
+attained. The [Bloom's Taxonomy](#bloom) may be a useful framework
+for defining and describing your goals and objectives, although there
+are others.
+
+### Learning goals
+
+* Integrate the different components from the Differential Expression analysis
+workflow
+* Utilize interactive web applications to efficiently extract information of the combined input objects
+* Adopt means to generate reproducible reports to capture the results of the live exploration
+
+### Learning objectives
+
+* Setup a local environment to run GeneTonic on the results of own RNA-seq experiments
+* Interact with the core components of GeneTonic to inspect the provided datasets
+* Create a variety of interactive visualizations to summarize and help interpret the data at hand
+* Practice the combination of interactivity and reproducibility to combine the advantages of these aspects in a single computational workflow
 
 
-## Whatcha get
-
-https://seandavi.github.io/BuildABiocWorkshop
-
-![dockerhub](https://github.com/seandavi/BuildABiocWorkshop/raw/master/inst/images/dockerhub_result.png)
