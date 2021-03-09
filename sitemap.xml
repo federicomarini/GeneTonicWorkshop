@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://seandavi.github.io/BuildABiocWorkshop/index.html</loc>
+    <loc>https://federicomarini.github.io/GeneTonicWorkshop/index.html</loc>
   </url>
   <url>
-    <loc>https://seandavi.github.io/BuildABiocWorkshop/articles/HOWTO_BUILD_WORKSHOP.html</loc>
+    <loc>https://federicomarini.github.io/GeneTonicWorkshop/reference/GeneTonicWorkshop-package.html</loc>
   </url>
   <url>
-    <loc>https://seandavi.github.io/BuildABiocWorkshop/articles/workshop_example.html</loc>
+    <loc>https://federicomarini.github.io/GeneTonicWorkshop/articles/HOWTO_BUILD_WORKSHOP.html</loc>
+  </url>
+  <url>
+    <loc>https://federicomarini.github.io/GeneTonicWorkshop/articles/workshop_example.html</loc>
   </url>
 </urlset>
