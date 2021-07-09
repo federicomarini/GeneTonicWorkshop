@@ -9,8 +9,16 @@ home:
   title: "GeneTonic: enjoying the interpretation of your RNA-seq data analysis"
   type: inverse
 
-
 navbar:
+  title: ~
+  type: default
+  left:
+    - text: Workshop
+      href: articles/GeneTonicWorkshop.html
+    - text: External Vignettes
+      menu:
+      - text: GeneTonic
+        href: https://bioconductor.org/packages/release/bioc/html/GeneTonic.html
   right:
    - icon: fa-github
      href: https://github.com/federicomarini/GeneTonicWorkshop
