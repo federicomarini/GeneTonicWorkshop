@@ -1,6 +1,5 @@
 ---
-title: >
-  GeneTonic: enjoying the interpretation of your RNA-seq data analysis
+title: "GeneTonic: enjoying the interpretation of your RNA-seq data analysis"
 author:
 - name: Federico Marini
   affiliation: 
@@ -13,7 +12,7 @@ author:
   email: anneludt@uni-mainz.de
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GeneTonicWorkshop}
+  %\VignetteIndexEntry{GeneTonic: enjoying the interpretation of your RNA-seq data analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
