@@ -1,0 +1,6 @@
+* https://docs.google.com/presentation/d/1B7DPJdZqEpAjsqf2uMZyhFSqeVyoCoIhEASJY_3cOYY/edit#slide=id.p
+
+* need to restructure the time plan - adapt to shorter format
+  - full slot: 45 minutes
+  - proposal: do 30 minutes demo, break of 5 in between, 10-15 minutes at the end
+  
