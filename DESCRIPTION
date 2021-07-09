@@ -31,3 +31,7 @@ URL: https://federicomarini.github.io/GeneTonicWorkshop/
 BugReports: https://github.com/federicomarini/GeneTonicWorkshop/issues/new/choose
 VignetteBuilder: knitr
 DockerImage: federicomarini/genetonicworkshop:latest
+biocViews:
+    GUI, GeneExpression, Software, Transcription, Transcriptomics, Visualization,
+    DifferentialExpression, Pathways, ReportWriting, GeneSetEnrichment, 
+    Annotation, Pathways, GO
