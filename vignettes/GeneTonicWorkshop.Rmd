@@ -375,6 +375,16 @@ GeneTonic(gtl = gtl_alma)
 
 The exploration can be guided by launching the introductory tours for each section of the app, and finally one can generate a small report focused on the features and genesets of interest.
 
+#### Exploring the `GeneTonic` app
+
+TODO
+
+...
+
+...
+
+...
+
 If some more custom visualizations are required, it is possible to export the objects in use from the app as a SummarizedExperiment object, to be then passed to the `iSEE` software [@Rue-Albrecht2018] for further exploration.
 
 ### Using `GeneTonic`'s functions in analysis reports 
