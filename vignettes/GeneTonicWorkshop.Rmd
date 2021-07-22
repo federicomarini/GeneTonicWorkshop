@@ -10,7 +10,7 @@ author:
   affiliation: 
   - Institute of Medical Biostatistics, Epidemiology and Informatics (IMBEI), Mainz
   email: anneludt@uni-mainz.de
-output: 
+output:
     bookdown::html_document2:
     toc: true
     toc_float: true
@@ -26,7 +26,7 @@ vignette: >
 ---
 
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -41,7 +41,7 @@ knitr::opts_chunk$set(
 
 To install the `GeneTonic` package and the package for this workshop, containing a processed version of the example dataset, execute the following chunk:
 
-```{r eval=FALSE}
+```{r install, eval=FALSE}
 # from Bioconductor
 BiocManager::install("GeneTonic")
 # devel version on GitHub
@@ -55,7 +55,7 @@ BiocManager::install("federicomarini/GeneTonicWorkshop",
 That should be it!  
 To make sure everything is installed correctly, run
 
-```{r}
+```{r loadgtw}
 library("GeneTonicWorkshop")
 ```
 
@@ -81,22 +81,32 @@ library("DT")
 library("GeneTonic")
 ```
 
-## Data processing
+## Data processing - Exploratory data analysis
 
 After obtaining a count matrix (via STAR and featureCounts), we generated a `DESeqDataset` object, provided in this repository for the ease of reproducing the presented analyses.
-
-### Exploratory data analysis
 
 We read in the dataset, apply the rlog transformation for performing PCA and creating a heatmap of the sample to sample distances.  
 We'll use some functions from the `pcaExplorer` package [@Marini2019] (see also Supplementary Figure 3 of [@Mohebiany2020]).
 
+These are the preprocessed dataset we are going to use throughout the demo:
+
+```{r demofiles}
+list.files(system.file("extdata", package = "GeneTonicWorkshop"))
+```
+
+We load the `DESeqDataSet` object and the annotation data frame for handling the conversion between Ensembl ids and gene names, and do a quick exploration of the data
+
 ```{r eda-alma}
-dds_alma <- readRDS("../inst/extdata/usecase_dds_alma.rds")
+dds_alma <- readRDS(
+  system.file("extdata", "usecase_dds_alma.rds", package = "GeneTonicWorkshop")
+)
 dds_alma
 
 rld_alma <- rlogTransformation(dds_alma)
 
-anno_df <- readRDS("../inst/extdata/usecase_annodf_alma.rds")
+anno_df <- readRDS(
+  system.file("extdata", "usecase_annodf_alma.rds", package = "GeneTonicWorkshop")
+)
 
 pheatmap::pheatmap(as.matrix(dist(t(assay(rld_alma)))))
 
@@ -107,7 +117,7 @@ pcaExplorer::pcaplot(rld_alma,
 )
 ```
 
-### Differential expression analysis
+## Data processing - Differential expression analysis
 
 We set the False Discovery Rate to 0.05 and we run the `DESeq2` workflow, generating results and using the `apeglm` shrinkage estimator.  
 We plot the results as an MA-plot and report them in a table, using the functions from the `ideal` package [@Marini2020] (see also Supplementary Figure 3 of [@Mohebiany2020]).
@@ -127,17 +137,28 @@ res_alma_ko_vs_ctrl$SYMBOL <- anno_df$gene_name[match(rownames(res_alma_ko_vs_ct
 summary(res_alma_ko_vs_ctrl)
 
 # saveRDS(res_alma_ko_vs_ctrl, file = "../inst/extdata/usecase_res_de_alma.rds")
+```
 
+Alternatively, we load in the results from the object included in the package
+
+```{r load-de}
+res_alma_ko_vs_ctrl <- readRDS(
+  system.file("extdata", "usecase_res_de_alma.rds", package = "GeneTonicWorkshop")
+)
+```
+
+
+```{r de-alma-plot}
 ideal::plot_ma(res_alma_ko_vs_ctrl, ylim = c(-5, 5), title = "MAplot - A20ko vs Ctrl")
 
-tbl_DEres_alma_ko_vs_ctrl <- deseqresult2df(res_alma_ko_vs_ctrl, FDR = FDR)
+tbl_DEres_alma_ko_vs_ctrl <- GeneTonic::deseqresult2df(res_alma_ko_vs_ctrl, FDR = FDR)
 
 DT::datatable(tbl_DEres_alma_ko_vs_ctrl, rownames = FALSE)
 ```
 
-### Functional enrichment analysis
+## Data processing - Functional enrichment analysis
 
-We perform functional enrichment analysis, here using the `topGOtable` wrapper to the method implemented in the `topGO` package.
+We perform functional enrichment analysis, here using the `topGOtable` wrapper (from `pcaExplorer`) to the method implemented in the `topGO` package.
 
 ```{r enrich-alma, cache=TRUE}
 expressedInAssay <- (rowSums(assay(dds_alma)) > 0)
@@ -173,8 +194,17 @@ GOccs_ko_vs_ctrl <- topGOtable(
   mapping = "org.Mm.eg.db",
   topTablerows = 500
 )
+```
 
+We take for example the results of the enrichment in the Biological Processes ontology, and convert them for use in `GeneTonic`
+
+```{r shaker-alma}
 res_enrich_a20 <- shake_topGOtableResult(GObps_ko_vs_ctrl)
+```
+
+We compute some aggregated scores - this additional columns will come in handy to colorize points, encoding for information about the direction of regulation of each biological process
+
+```{r aggrscores-alma}
 res_enrich_a20 <- get_aggrscores(
   res_enrich = res_enrich_a20,
   res_de = res_alma_ko_vs_ctrl,
@@ -186,7 +216,15 @@ res_enrich_a20 <- get_aggrscores(
 DT::datatable(res_enrich_a20, rownames = FALSE)
 ```
 
-#### Using alternative enrichment analysis methods
+If desired, you can load directly the enrichment results, already converted for `GeneTonic`, from the objects provided in this workshop package:
+
+```{r load-enrich}
+res_enrich_a20 <- readRDS(
+  system.file("extdata", "usecase_res_enrich_alma.rds", package = "GeneTonicWorkshop")
+)
+```
+
+### Using alternative enrichment analysis methods
 
 It is possible to use the output of different other methods for enrichment analysis, thanks to the `shaker_*` functions implemented in `GeneTonic` - see for example `?shake_topGOtableResult`, and navigate to the manual pages for the other functions listed in the "See Also" section.
 
@@ -200,7 +238,7 @@ It is possible to use the output of different other methods for enrichment analy
 
 Some examples on how to use them are reported here:
 
-```{r, eval=FALSE}
+```{r alt-enrich, eval=FALSE}
 # clusterProfiler --------------------------------------------------------------
 library("clusterProfiler")
 degenes_alma <- deseqresult2df(res_alma_ko_vs_ctrl, FDR = 0.05)$id
@@ -280,11 +318,11 @@ res_enrich_enrichr_KEGG <- shake_enrichrResult(
 )
 ```
 
-### Assembling the `gtl` object
+## Assembling the `gtl` object
 
 To simplify the usage of the function from `GeneTonic`, we create a `GeneTonic_list` object
 
-```{r}
+```{r assemble-gtl}
 gtl_alma <- GeneTonic_list(
   dds = dds_alma,
   res_de = res_alma_ko_vs_ctrl,
@@ -295,25 +333,33 @@ gtl_alma <- GeneTonic_list(
 # saveRDS(gtl_alma, "../inst/extdata/gtl_alma.rds")
 ```
 
-## Running `GeneTonic` on the dataset
+Again, if desired, you could load the `gtl` object directly from the precomputed objects
 
-Let's load the `GeneTonicList` object, containing all the structured input needed.
-
-```{r}
-gtl_alma <- readRDS("../inst/extdata/gtl_alma.rds")
+```{r load-gtl}
+gtl_alma <- readRDS(
+  system.file("extdata", "gtl_alma.rds", package = "GeneTonicWorkshop")
+)
 ```
 
-### `GeneTonic`, interactively
+
+# Running `GeneTonic` on the dataset, interactively
+
+We do have a `GeneTonicList` object, containing all the structured input needed.  
+We can inspect its content with the internal `GeneTonic:::describe_gtl()`
+
+```{r desc-gtl}
+GeneTonic:::describe_gtl(gtl_alma)
+```
 
 This command will launch the `GeneTonic` app:
 
-```{r eval=FALSE}
+```{r run-gt, eval=FALSE}
 GeneTonic(gtl = gtl_alma)
 ```
 
 The exploration can be guided by launching the introductory tours for each section of the app, and finally one can generate a small report focused on the features and genesets of interest.
 
-#### Exploring the `GeneTonic` app
+## Exploring the `GeneTonic` app
 
 The `GeneTonic` app provides various different panels and plots to visualize your data. When launching the app as shown above, the `GeneTonic` app will start and show information about the provided data in the Welcome panel. 
 
@@ -343,18 +389,18 @@ The information provided by the heatmap and volcano plot of each geneset can fur
 
 ![Exporting teh data for further use](images/Bookmark.png)
 
-### Using `GeneTonic`'s functions in analysis reports 
+# Using `GeneTonic`'s functions in analysis reports 
 
 The functionality of `GeneTonic` can be used also as standalone functions, to be called for example in existing analysis reports in RMarkdown, or R scripts.  
 In the following chunks, we show how it is possible to call some of the functions on the A20-deficient microglia set.
 
 For more details on the functions and their outputs, please refer to the package documentation and the vignette.
 
-#### Genesets and genes
+## Genesets and genes
 
 We can represent the relationships between genesets and genes with `enhance_table()`, `gs_summary_heat()`, and `ggs_graph()`:
 
-```{r}
+```{r genesets-genes}
 p <- enhance_table(
   gtl = gtl_alma,
   n_gs = 30,
@@ -392,11 +438,11 @@ ggs %>%
   )
 ```
 
-#### Overview representations
+## Overview representations
 
 We can also obtain summary representations of the enrichment results, either as table-like views (with `gs_volcano()`, `gs_summary_overview()`, `gs_fuzzyclustering()`, `gs_scoresheat()`), or to represent the relationships among genesets (via `enrichment_map()`, `gs_dendro()`, `gs_mds()`)
 
-```{r}
+```{r gs-overviews}
 gs_volcano(
   res_enrich = res_enrich_a20,
   p_threshold = 0.05,
@@ -448,7 +494,7 @@ gs_scoresheat(scores_mat,
 
 
 
-```{r, eval = F}
+```{r gt-emap, eval = FALSE}
 em <- enrichment_map(gtl = gtl_alma, n_gs = 100)
 
 library("visNetwork")
@@ -523,11 +569,11 @@ gs_mds(
 )
 ```
 
-#### General use functions
+## General use functions
 
 It is possible to obtain focused representations and descriptions of single genesets with `gs_heatmap()`, `go2html()`, and `signature_volcano()` - these need the Gene Ontology identifier to generate the desired content, while the `gtl` object contains all the necessary expression matrices and tables.
 
-```{r}
+```{r gs-general}
 gs_heatmap(
   se = vst_alma,
   gtl = gtl_alma,
@@ -550,7 +596,7 @@ signature_volcano(
 
 As an example, these plots are related to the data presented in Figure 3 of [@Mohebiany2020].
 
-```{r}
+```{r gs-synapse}
 genes_synapse_assembly <- c(
   "Bhlhb9",
   "Mef2c",
@@ -586,12 +632,12 @@ gs_heatmap(
 )
 ```
 
-#### Comparing enrichment results
+## Comparing enrichment results
 
 Imagine we were to compare the enrichment results from our study to another one where the same set of pathways is reported - or alternatively, on the same dataset but focusing on a different contrast.
 We can replicate such a situation by shuffling the results in `res_enrich_a20`, and displaying the comparison with `gs_radar()`, `gs_summary_overview_pair()`, or `gs_horizon()`
 
-```{r}
+```{r gs-compare}
 # with more than one set
 res_enrich_shuffled <- res_enrich_a20[1:60, ]
 set.seed(42)
@@ -613,7 +659,7 @@ gs_horizon(res_enrich = res_enrich_a20,
 ```
 
 
-#### Integrated reporting
+## Integrated reporting
 
 The reporting functionality of `happy_hour()` can be called anytime also from the command line, focusing on a subset of genes and genesets of interest, which will be presented with additional detail in the output document.
 
@@ -636,26 +682,26 @@ happy_hour(
 ```
 
 
-### Alternate entry point - using `edgeR` for the DE analysis
+## Alternate entry point - using `edgeR` for the DE analysis
 
 It is also possible to use `edgeR` to perform the steps before using `GeneTonic`.  
 The chunk below reports an example of how to do so - imagine you start with a `DGE` object called `dge_alma`:
 
-```{r}
+```{r with-edger}
 library("DEFormats")
 library("edgeR")
-dge_alma <- as.DGEList(readRDS("../inst/extdata/usecase_dds_alma.rds"))
+dge_alma <- as.DGEList(dds_alma)
 ```
 
 We add the gene symbols for ease of readability... 
 
-```{r}
+```{r add-genenames}
 dge_alma$genes$SYMBOL <- anno_df$gene_name[match(rownames(dge_alma$genes), anno_df$gene_id)]
 ```
 
 ... and perform a QL-based analysis, obtaining the `qlf` object at the end of it.
 
-```{r}
+```{r edger-run}
 keep <- filterByExpr(dge_alma)
 table(keep)
 y <- dge_alma[keep, , keep.lib.sizes = FALSE]
@@ -671,7 +717,7 @@ plotMD(qlf)
 
 We would need to convert these objects back to the `DESeq2`-based objects.
 
-```{r}
+```{r convert-back}
 convert_to_DESeqResults <- function(dgelrt, dge, FDR = 0.05) {
   tbledger <- as.data.frame(topTags(dgelrt, n = Inf))
   colnames(tbledger)[colnames(tbledger) == "PValue"] <- "pvalue"
@@ -700,7 +746,7 @@ dds_alma_from_edgeR <- as.DESeqDataSet(dge_alma)
 
 Imagine we have already our `res_enrich` object, obtained in any of the ways specified above - then we can simply launch `GeneTonic` with these commands (utilizing the `anno_df` object from the examples above):
 
-```{r, eval=FALSE}
+```{r run-from-edger, eval=FALSE}
 gtl_from_edgeR <- GeneTonic_list(
   dds = dds_alma_from_edgeR,
   res_de = res_de_from_edgeR,
@@ -714,7 +760,7 @@ GeneTonic(gtl = gtl_from_edgeR)
 
 # Session information {-}
 
-```{r}
+```{r sessioninfo}
 sessionInfo()
 ```
 
