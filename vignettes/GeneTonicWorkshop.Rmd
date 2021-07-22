@@ -11,7 +11,7 @@ author:
   - Institute of Medical Biostatistics, Epidemiology and Informatics (IMBEI), Mainz
   email: anneludt@uni-mainz.de
 output:
-    bookdown::html_document2:
+  bookdown::html_document2:
     toc: true
     toc_float: true
     theme: cosmo
