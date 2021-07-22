@@ -25,6 +25,7 @@ Suggests:
     macrophage,
     org.Hs.eg.db,
     knitr,
+    bookdown,
     rmarkdown,
     pkgdown
 URL: https://federicomarini.github.io/GeneTonicWorkshop/
