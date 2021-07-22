@@ -19,11 +19,25 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Depends:
+    R (>= 4.0.0)
 Suggests: 
     GeneTonic,
+    DESeq2,
+    topGO,
+    pheatmap,
+    pcaExplorer,
+    ideal,
+    DT,
     clusterProfiler,
     macrophage,
     org.Hs.eg.db,
+    DEFormats,
+    apeglm,
+    edgeR, 
+    magrittr,
+    org.Mm.eg.db, 
+    visNetwork,
     knitr,
     bookdown,
     rmarkdown,
