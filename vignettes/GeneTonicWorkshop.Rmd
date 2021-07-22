@@ -59,7 +59,7 @@ To make sure everything is installed correctly, run
 library("GeneTonicWorkshop")
 ```
 
-# Using GeneTonic on the A20-deficient microglia dataset (GSE123033)
+# Using `GeneTonic` on the A20-deficient microglia dataset (GSE123033)
 
 ## About the data
 
