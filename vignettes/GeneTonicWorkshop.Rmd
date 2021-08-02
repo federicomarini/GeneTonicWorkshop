@@ -368,7 +368,7 @@ The `GeneTonic` app provides various different panels and plots to visualize you
 The panel list the individual inputs of the `GeneTonic` app with some overall information (e.g. the number of DE genes). 
 Further information about the input can be acquired by clicking the plus sign of each respective input.
 
-Via the panel selection on the left site, individual panels can be explored. 
+Via the panel selection on the left side, individual panels can be explored. 
 One of these panels is the Gene-Geneset panel which provides information about the genesets and genes found in the data based on the functional annotation object. 
 The genesets and their belonging genes are depicted in a graph in which the genesets are shown as yellow rectangles and the genes as round nodes. 
 The node color of the genes reflects their regulation in the data with red indicating an up-regulation and blue a down-regulation. 
@@ -386,7 +386,7 @@ The "Next" and "Back" button lead through the tour and its individual elements.
 Throughout the tour individual elements of the respective panel will be highlighted and explained.
 
 ![Example explanation of the tour](images/tour_explanation.png)
-the panels of the `GeneTonic` app are designed interactively and offer the possibility of exploring the data by clicking on various elements of the page. 
+The panels of the `GeneTonic` app are designed interactively and offer the possibility of exploring the data by clicking on various elements of the page. 
 For example through clicking on one of the genesets in the shown graph (yellow rectangle) additional content will be displayed in the Geneset box. 
 In the case of a geneset these are a heatmap and a volcano plot which provide additional information about the regulation of the genes contained in the geneset. 
 
