@@ -1,5 +1,5 @@
 ---
-title: "How To Build A Workshop Package"
+title: "How to Use this Package to Build a Bioc Workshop"
 subtitle: "In other words, how do I use what's here"
 author: Sean Davis^[seandavi@gmail.com]
 output: rmarkdown::html_vignette

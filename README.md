@@ -53,9 +53,8 @@ Attendees will participate by following along a presentation introducing the Gen
 | Activity                     | Time |
 |------------------------------|------|
 | Overview                     | 10m  |
-| Introduction to GeneTonic    | 15m  |
-| Hands-on exercises           | 60m  |
-| Q&As                         | 15m  |
+| Introduction to GeneTonic    | 25m  |
+| Q&As                         | 10m  |
 
 ### Workshop goals and objectives
 

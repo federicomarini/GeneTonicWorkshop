@@ -9,8 +9,23 @@ home:
   title: "GeneTonic: enjoying the interpretation of your RNA-seq data analysis"
   type: inverse
 
-
 navbar:
+  title: ~
+  type: default
+  left:
+    - text: Workshop
+      href: articles/GeneTonicWorkshop.html
+    - text: Additional material
+      menu:
+      - text: "Hint: use Ctrl/Cmd+click to open in a new tab"
+      - text: The GeneTonic package - on Bioconductor
+        href: https://bioconductor.org/packages/GeneTonic
+      - text: The GeneTonic manuscript
+        href: https://www.biorxiv.org/content/10.1101/2021.05.19.444862v1
+      - text: The GeneTonic supplement repo
+        href: https://github.com/federicomarini/GeneTonic_supplement
+      - text: Overview of similar software
+        href: https://federicomarini.github.io/GeneTonic_supplement/
   right:
    - icon: fa-github
      href: https://github.com/federicomarini/GeneTonicWorkshop
